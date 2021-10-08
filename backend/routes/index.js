@@ -5,7 +5,8 @@ class Routes extends ModelsRoutes {
     super()
     this.routes = routes
     this.listRoutes = [
-      { route: '/users', table: 'users' }
+      { route: '/users', table: 'users' },
+      { route: '/clients', table: 'clients' }
     ]
     this.defineRoutes()
   }

@@ -1,4 +1,11 @@
 import axios from 'axios'
-const request = ({ method, route, data }) => axios[method || 'get']('http://localhost:1414' + route, data)
+import { buildQuery } from './helper'
+const request = async ({ method, route, data }) => {
+  if (method === 'get') {
+    return axios[method || 'get']('http://localhost:1414' + route + buildQuery(data))
+  } else {
+    return axios[method || 'get']('http://localhost:1414' + route, data)
+  }
+}
 
-export const SendLogin = (route, data, method) => request({ method, route, data })
+export const SendLogin = async (route, data, method) => await request({ method, route, data })

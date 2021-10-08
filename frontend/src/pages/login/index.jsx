@@ -5,15 +5,20 @@ import { Icon } from "../../components/icon"
 import { BodyLogin, ContainerLogin } from "../../styles/login"
 import serialize from 'form-serialize'
 import { SendLogin } from "../../api"
+import { msg } from "../../helpers"
+import { useContext } from "react"
+import { StateGlobal } from "../../provider/globalState"
 
 
 export const Login = () => {
-  
+  const { state, setState } = useContext(StateGlobal)
   const handleSubmit = async event => {
     event.preventDefault()
     const data = serialize(event.target, { empty: false, hash: true })
-    const response = await SendLogin('/login', data, 'post')
-    console.log(response);
+  
+    const response = await SendLogin('/users', data, 'get').catch(erro => ({ error: true, message: erro }))
+    if (response.error || !response.data.length) return msg.invalidLogin()
+    
   }
 
   return (

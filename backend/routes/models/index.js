@@ -2,7 +2,8 @@ const db = require('../../db')
 
 class ModelsRoutes {
   async select (req, res, _, table) {
-    const response = await db(table).select('*').where(req.query).catch(() => [])
+    const response = await db(table).select('*').where(req.query).catch(erro => ({ error: true, message: erro }))
+    if (response.error) return res.status(400).json(response)
     return res.status(200).json(response)
   }
 
